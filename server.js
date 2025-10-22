@@ -18,6 +18,15 @@ app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });
 
+app.get("/", (req, res) => {
+  console.log("GET / route accessed");
+  res.json({
+    message: "Backend API is running!",
+    status: "OK",
+    version: "1.0.0",
+  });
+});
+
 app.post("/process-book", upload.single("file"), async (req, res) => {
   const { userId } = req.body;
   const file = req.file;
@@ -93,10 +102,15 @@ app.use((_req, res) => {
 });
 
 const startServer = async () => {
+  console.log("Initializing database...");
   await initDatabase();
+  console.log("Database initialized");
 
+  console.log("Express app created, routes should be registered");
+  
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log("Server is ready to accept requests");
   });
 };
 
