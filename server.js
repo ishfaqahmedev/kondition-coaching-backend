@@ -48,10 +48,10 @@ app.post("/process-book", upload.single("file"), async (req, res) => {
     });
   }
 
-  if (file.size > 10 * 1024 * 1024) {
+  if (file.size > 150 * 1024 * 1024) {
     await fs.unlink(file.path);
     return res.status(400).json({
-      error: "File size must be less than 10MB",
+      error: "File size must be less than 150MB",
     });
   }
 
@@ -107,7 +107,7 @@ const startServer = async () => {
   console.log("Database initialized");
 
   console.log("Express app created, routes should be registered");
-  
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
     console.log("Server is ready to accept requests");
