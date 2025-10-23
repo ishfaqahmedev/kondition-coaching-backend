@@ -14,7 +14,8 @@ const initDatabase = async () => {
     await pool.query("CREATE EXTENSION IF NOT EXISTS vector");
 
     await pool.query(`
-      CREATE TABLE IF NOT EXISTS embeddings (
+      DROP TABLE IF EXISTS embeddings;
+      CREATE TABLE embeddings (
         id TEXT PRIMARY KEY,
         book_id TEXT NOT NULL,
         user_id TEXT NOT NULL,

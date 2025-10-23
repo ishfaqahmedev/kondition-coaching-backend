@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/process-book", upload.single("file"), async (req, res) => {
-  const { userId } = req.body;
+  const { userId, forRole } = req.body;
   const file = req.file;
 
   if (!file || !userId) {
@@ -59,8 +59,8 @@ app.post("/process-book", upload.single("file"), async (req, res) => {
 
   try {
     const result = await pool.query(
-      'INSERT INTO "Book" (name, size, type, "processingStatus", "userId") VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [name, size, fileType, "pro", userId]
+      'INSERT INTO "Book" (name, size, type, "forRole", "processingStatus", "userId") VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+      [name, size, fileType, forRole, "pro", userId]
     );
     const bookId = result.rows[0].id;
 
